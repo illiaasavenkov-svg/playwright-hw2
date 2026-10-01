@@ -1,18 +1,22 @@
 import { test, expect } from '@playwright/test';
 
-test('show-selected-coffees.spec', async ({ page }) => {
-  await page.goto('https://coffee-cart.app/');
-  await page.locator('[data-test="Espresso_Macchiato"]').click();
-  await page.locator('[data-test="Cappuccino"]').click();
-  await expect(page.locator('#app')).toMatchAriaSnapshot(`
-    - listitem:
-      - link "Cart page":
-        - /url: /cart
-        - text: cart (2)
-    `);
-  await page.getByRole('link', { name: 'Cart page' }).click();
+test.describe('Cart page', () => {
+  test('should show selected coffees in the cart and remove one of them', async ({ page }) => {
+    await page.goto('https://coffee-cart.app/');
 
-  await expect(page.getByText('Cappuccino x 1+-Espresso Macchiato x 1+-Total: $')).toBeVisible();
-  await page.getByRole('button', { name: 'Remove all Cappuccino' }).click();
-  await expect(page.getByText('menucart (1)githubEspresso')).toBeVisible();
+    await page.locator('[data-test="Espresso_Macchiato"]').click();
+    await page.locator('[data-test="Cappuccino"]').click();
+    await expect(page.getByRole('link', { name: 'Cart page' })).toHaveText('cart (2)');
+
+    await page.getByRole('link', { name: 'Cart page' }).click();
+
+    await expect(page.getByRole('button', { name: 'Remove all Cappuccino' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Remove all Espresso Macchiato' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Remove all Cappuccino' }).click();
+
+    await expect(page.getByRole('button', { name: 'Remove all Cappuccino' })).toBeHidden();
+    await expect(page.getByRole('link', { name: 'Cart page' })).toHaveText('cart (1)');
+    await expect(page.locator('[data-test="checkout"]')).toHaveText('Total: $12.00');
+  });
 });
