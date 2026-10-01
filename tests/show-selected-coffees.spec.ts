@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Cart page', () => {
   test('should show selected coffees in the cart and remove one of them', async ({ page }) => {
-    await page.goto('https://coffee-cart.app/');
+    await page.goto('/');
 
     await page.locator('[data-test="Espresso_Macchiato"]').click();
     await page.locator('[data-test="Cappuccino"]').click();

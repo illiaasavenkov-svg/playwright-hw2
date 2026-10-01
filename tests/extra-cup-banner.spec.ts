@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Extra cup promotion', () => {
   test('should offer discounted Mocha after 3 coffees and add it to the cart', async ({ page }) => {
-    await page.goto('https://coffee-cart.app/');
+    await page.goto('/');
 
     await page.locator('[data-test="Espresso_Macchiato"]').click();
     await page.locator('[data-test="Cappuccino"]').click();

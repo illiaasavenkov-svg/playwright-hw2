@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Checkout', () => {
   test('should show success message after submitting payment details', async ({ page }) => {
-    await page.goto('https://coffee-cart.app/');
+    await page.goto('/');
 
     await page.locator('[data-test="Cappuccino"]').click();
     await page.locator('[data-test="checkout"]').click();

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Cart total', () => {
   test('should update total price when coffees are added', async ({ page }) => {
-    await page.goto('https://coffee-cart.app/');
+    await page.goto('/');
 
     await expect(page.locator('[data-test="checkout"]')).toHaveText('Total: $0.00');
 
