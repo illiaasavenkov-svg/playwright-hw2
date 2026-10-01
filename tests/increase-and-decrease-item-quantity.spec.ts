@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('add_remove_item_cart', async ({ page }) => {
+test('increase-and-decrease-item-quantity', async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
 
   await page.locator('[data-test="Cappuccino"]').click();

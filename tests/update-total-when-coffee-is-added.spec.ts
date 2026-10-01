@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('coffee_cart', async ({ page }) => {
+test('update-total-when-coffee-is-added', async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
 
   await page.locator('[data-test="Espresso"]').click();

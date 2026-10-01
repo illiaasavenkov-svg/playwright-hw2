@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Coffee Cart – extra cup promo', () => {
+test.describe('Cextra-cup-banner', () => {
   test('should offer discounted Mocha after 3 coffees and add it to the cart', async ({ page }) => {
     await page.goto('https://coffee-cart.app/');
 
