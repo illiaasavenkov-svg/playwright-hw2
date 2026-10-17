@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:chromium": "playwright test --project=chromium",
+    "test:coffee-cart": "playwright test --project=coffee-cart",
+    "test:aria-practice": "playwright test --project=aria-practice",
     "report": "playwright show-report"
   },
   "keywords": [],

@@ -25,28 +25,22 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://coffee-cart.app',
-
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
 
-  /* Configure projects for major browsers */
+  /* Coffee Cart and ARIA practice (QA Dojo) target different apps, so each runs as its own project */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'coffee-cart',
+      testIgnore: /auth\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], baseURL: 'https://coffee-cart.app' },
     },
 
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'aria-practice',
+      testMatch: /auth\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], baseURL: process.env.BASE_URL ?? 'http://104.168.59.50' },
     },
 
     /* Test against mobile viewports. */
