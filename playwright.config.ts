@@ -33,13 +33,13 @@ export default defineConfig({
   projects: [
     {
       name: 'coffee-cart',
-      testIgnore: /auth\.spec\.ts/,
+      testIgnore: /(auth|sortable-table)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], baseURL: 'https://coffee-cart.app' },
     },
 
     {
       name: 'aria-practice',
-      testMatch: /auth\.spec\.ts/,
+      testMatch: /(auth|sortable-table)\.spec\.ts/,
       use: { ...devices['Desktop Chrome'], baseURL: process.env.BASE_URL ?? 'http://104.168.59.50' },
     },
 
