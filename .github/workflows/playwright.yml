@@ -1,9 +1,9 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, hm.final ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, hm.final ]
 jobs:
   test:
     timeout-minutes: 60
@@ -19,6 +19,9 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+      env:
+        CI: true
+        BASE_URL: ${{ vars.BASE_URL || 'http://104.168.59.50' }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
