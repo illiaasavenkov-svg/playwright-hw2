@@ -1,5 +1,9 @@
 import { test, expect } from '@playwright/test';
 
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
 // QA Dojo URL is configured via BASE_URL env variable (fallback for local runs)
 test.use({ baseURL: process.env.BASE_URL ?? 'http://104.168.59.50' });
 
