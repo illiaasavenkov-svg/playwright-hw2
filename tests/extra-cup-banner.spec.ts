@@ -2,20 +2,31 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Extra cup promotion', () => {
   test('should offer discounted Mocha after 3 coffees and add it to the cart', async ({ page }) => {
+    // Locators depend on the `page` fixture, so they live inside the test.
+    // All are const: a locator is never reassigned, it is re-evaluated on each action.
+    const espressoMacchiatoCup = page.locator('[data-test="Espresso_Macchiato"]');
+    const cappuccinoCup = page.locator('[data-test="Cappuccino"]');
+    const americanoCup = page.locator('[data-test="Americano"]');
+    const promoMessage = page.getByText("It's your lucky day! Get an extra cup of Mocha for $4.");
+    const acceptPromoButton = page.getByRole('button', { name: 'Yes, of course!' });
+    const cartLink = page.getByRole('link', { name: 'Cart page' });
+    const discountedMochaItem = page.getByRole('listitem').filter({ hasText: '(Discounted) Mocha' }).first();
+    const checkoutButton = page.locator('[data-test="checkout"]');
+
     await page.goto('/');
 
-    await page.locator('[data-test="Espresso_Macchiato"]').click();
-    await page.locator('[data-test="Cappuccino"]').click();
-    await page.locator('[data-test="Americano"]').click();
+    await espressoMacchiatoCup.click();
+    await cappuccinoCup.click();
+    await americanoCup.click();
 
-    await expect(page.getByText("It's your lucky day! Get an extra cup of Mocha for $4.")).toBeVisible();
-    await page.getByRole('button', { name: 'Yes, of course!' }).click();
+    await expect(promoMessage).toBeVisible();
+    await acceptPromoButton.click();
 
-    await expect(page.getByRole('link', { name: 'Cart page' })).toHaveText('cart (4)');
+    await expect(cartLink).toHaveText('cart (4)');
 
-    await page.getByRole('link', { name: 'Cart page' }).click();
+    await cartLink.click();
 
-    await expect(page.getByRole('listitem').filter({ hasText: '(Discounted) Mocha' }).first()).toBeVisible();
-    await expect(page.locator('[data-test="checkout"]')).toHaveText('Total: $42.00');
+    await expect(discountedMochaItem).toBeVisible();
+    await expect(checkoutButton).toHaveText('Total: $42.00');
   });
 });
